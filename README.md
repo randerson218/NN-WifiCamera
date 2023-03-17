@@ -15,7 +15,7 @@ network = [Layer(100,20),
 </example>
 This gives a network with 100 inputs, 1 hidden layer with 20 nodes and a sigmoid activation function, with one output.
 
-### Example 2
+### Example 2:
 ```python
 network = [Layer(3,25),
     Sigmoid(),
@@ -24,3 +24,5 @@ network = [Layer(3,25),
     Layer(30,2)]
 ```
 This gives a network with 3 inputs, 2 hidden layers (one with 25 nodes and a sigmoid activation function, and another with 30 nodes and a tanh activation function), and 2 outputs.
+
+This program will also generate a CSV with the error of each epoch named "error.csv"
