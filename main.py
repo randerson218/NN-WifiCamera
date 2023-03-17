@@ -74,32 +74,34 @@ for e in range(EPOCHS):
 
 errfile.close()
 print("TRAINING FINISHED")
-print("IH Weights:\n",network[0].weights,"\n")
-print("HO Weights:\n",network[2].weights, "\n")
+
+##print weights of connections after training
+#print("IH Weights:\n",network[0].weights,"\n")
+#print("HO Weights:\n",network[2].weights, "\n")
 
 
 #TESTING SECTION
 start = time.perf_counter()
 
-testcases = []
-testtruth = []
+testCases = []
+testTruth = []
 
 for filename in os.listdir("./tests/person"):
      if ".csv" in filename:
         with open("./tests/person/" + filename) as csvfile:
-            testcases.append(csvfile.read().strip().replace("\n",",").split(","))
-            testtruth.append(1)
+            testCases.append(csvfile.read().strip().replace("\n",",").split(","))
+            testTruth.append(1)
 
 for filename in os.listdir("./tests/notperson"):
      if ".csv" in filename:
         with open("./tests/notperson/" + filename) as csvfile:
-            testcases.append(csvfile.read().strip().replace("\n",",").split(","))
-            testtruth.append(0)
+            testCases.append(csvfile.read().strip().replace("\n",",").split(","))
+            testTruth.append(0)
 
-numcases = len(testcases)
+numCases = len(testCases)
 
-testCasesReshaped = np.reshape(testcases, (numcases, 100, 1))
-testTruthReshaped = np.reshape(testtruth, (numcases, 1, 1))
+testCasesReshaped = np.reshape(testCases, (numCases, 100, 1))
+testTruthReshaped = np.reshape(testTruth, (numCases, 1, 1))
 testCasesReshaped = np.array(testCasesReshaped, dtype=int)
 testTruthReshaped = np.array(testTruthReshaped, dtype=int)
 
@@ -112,7 +114,8 @@ for x, y in zip(testCasesReshaped,testTruthReshaped):
             output = layer.forward(output)
         
         testoutputs.append(output[0][0])
-        print("Actual: %s, Predicted: %s\n" % (testtruth[inputCounter],output[0][0]))
+        print("Actual: %s, Predicted: %s\n" % (testTruth[inputCounter],output[0][0]))
         inputCounter +=1
 
-print("Average Time Per Calculation: %f" % ((time.perf_counter()-start)/numcases))
+#Time per prediction of test cases
+#print("Average Time Per Prediction: %f" % ((time.perf_counter()-start)/numCases))
