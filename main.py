@@ -13,7 +13,7 @@ lst1 = os.listdir("./inputdata/person")
 lst2 = os.listdir("./inputdata/notperson") 
 
 NUM_DATA_POINTS = int(len(lst1) + len(lst2))
-EPOCHS = 1000
+EPOCHS = 500
 LEARNING_RATE = 0.001
 
 #Holds truth vals
@@ -43,9 +43,9 @@ trainTruthReshaped = np.array(trainTruthReshaped, dtype=int)
 
 #BUILD NETWORK
 network = [
-    Layer(100,20),
+    Layer(100,50),
     Sigmoid(),
-    Layer(20,1) 
+    Layer(50,1) 
 ]
 
 errfile = open("error.csv","w")
