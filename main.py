@@ -13,8 +13,8 @@ lst1 = os.listdir("./inputdata/person")
 lst2 = os.listdir("./inputdata/notperson") 
 
 NUM_DATA_POINTS = int(len(lst1) + len(lst2))
-EPOCHS = 500
-LEARNING_RATE = 0.001
+EPOCHS = 1000
+LEARNING_RATE = 0.005
 
 #Holds truth vals
 trainingTruth = []
@@ -33,6 +33,12 @@ for filename in os.listdir("./inputdata/notperson"):
         with open("./inputdata/notperson/" + filename) as csvfile:
             trainingInputs.append(csvfile.read().strip().replace("\n",",").split(","))
             trainingTruth.append(0)
+
+temp = list(zip(trainingInputs, trainingTruth))
+random.shuffle(temp)
+res1, res2 = zip(*temp)
+# res1 and res2 come out as tuples, and so must be converted to lists.
+trainingInputs, trainingTruth = list(res1), list(res2)
 
 #reshape data to appropriate dimensions
 trainInputReshaped = np.reshape(trainingInputs, (NUM_DATA_POINTS, 100, 1))
@@ -107,6 +113,10 @@ testTruthReshaped = np.array(testTruthReshaped, dtype=int)
 
 inputCounter = 0
 testoutputs = []
+
+correctCounter = 0
+incorrectCounter = 0
+
 for x, y in zip(testCasesReshaped,testTruthReshaped):
         #forward
         output = x
@@ -114,8 +124,20 @@ for x, y in zip(testCasesReshaped,testTruthReshaped):
             output = layer.forward(output)
         
         testoutputs.append(output[0][0])
+
+        prediction = output[0][0].round()
+
+        if prediction > 0 and testTruth[inputCounter] == 1:
+            correctCounter += 1
+        elif prediction <= 0 and testTruth[inputCounter] == 0:
+            correctCounter += 1
+        else:
+            incorrectCounter +=1
+
         print("Actual: %s, Predicted: %s\n" % (testTruth[inputCounter],output[0][0]))
+        
         inputCounter +=1
 
+print("Correct: %s\nIncorrect:%s\nPercentage:%s" % (correctCounter,incorrectCounter,(correctCounter/(correctCounter+incorrectCounter))*100))
 #Time per prediction of test cases
 #print("Average Time Per Prediction: %f" % ((time.perf_counter()-start)/numCases))
