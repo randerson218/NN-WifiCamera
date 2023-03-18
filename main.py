@@ -14,7 +14,7 @@ lst2 = os.listdir("./inputdata/notperson")
 
 NUM_DATA_POINTS = int(len(lst1) + len(lst2))
 EPOCHS = 1000
-LEARNING_RATE = 0.005
+LEARNING_RATE = 0.001
 
 #Holds truth vals
 trainingTruth = []
