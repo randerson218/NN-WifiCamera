@@ -125,7 +125,7 @@ for x, y in zip(testCasesReshaped,testTruthReshaped):
         
         testoutputs.append(output[0][0])
 
-        prediction = output[0][0].round()
+        prediction = int(output[0][0].round())
 
         if prediction > 0 and testTruth[inputCounter] == 1:
             correctCounter += 1
@@ -134,7 +134,7 @@ for x, y in zip(testCasesReshaped,testTruthReshaped):
         else:
             incorrectCounter +=1
 
-        print("Actual: %s, Predicted: %s\n" % (testTruth[inputCounter],output[0][0]))
+        print("Actual: %s, Predicted: %s\n" % (testTruth[inputCounter],prediction))
         
         inputCounter +=1
 
